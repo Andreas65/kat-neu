@@ -1,0 +1,13 @@
+/* TEAM */
+
+Chef: Marco Neumann
+From: Leipzig, Germany
+
+Developer: Christian Weber
+From: Leipzig, Germany
+
+Quality assurance: Fabian Grutschus
+From: Magdeburg, Germany
+
+/* SITE */
+Jobs: http://www.unister.de/karriere/stellenangebote.html
