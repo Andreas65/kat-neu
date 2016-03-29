@@ -1,0 +1,38 @@
+{
+    "name": "travelpackages/skeleton-build",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.unister.lan"
+        },
+        {
+            "type": "composer",
+            "url": "http://apps.qa.unister.lan/composer"
+        },
+        {
+            "type": "pear",
+            "url": "http://pear.php.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "unister-qa/phing-deployment": "~1.12",
+        "phing/phing": "~2.10",
+        "cloneportal/gettext": "~0.1"
+    },
+    "require-dev": {
+        "redaxmedia/gsp": "~2.2",
+        "unister-phing/notification": "~1.0",
+        "clue/graph-composer": "0.1.*",
+        "composer/composer": "1.0.x-dev",
+        "phpdocumentor/phpdocumentor": "~2.8",
+        "phpdocumentor/template-responsive-twig": "~1.2",
+        "phpunit/phpunit": "~4.4",
+        "sebastian/phpcpd": "~2.0",
+        "squizlabs/php_codesniffer": "~2.1",
+        "unister-phing/analysis-composer": "0.4.*",
+        "unister-phing/analysis-php": "0.3.*",
+        "unister-phing/notification": "~1.3",
+        "phpmd/phpmd": "~2.2"
+    }
+}

@@ -1,0 +1,9 @@
+; Database list for phing db deploy
+db.list = main
+
+; Database for skeleton
+db.server.main.host = %TO_REPLACE_DBHOST%
+db.server.main.port = 3306
+db.server.main.username = %TO_REPLACE_DBUSER%
+db.server.main.password = %TO_REPLACE_DBPASS%
+db.server.main.name = %TO_REPLACE_DBNAME%

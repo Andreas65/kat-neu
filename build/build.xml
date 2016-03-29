@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="travelpackages/skeleton" default="help">
+    <import file="vendor/unister-qa/phing-deployment/base/base.xml"/>
+    <import file="vendor/autoload.xml" optional="true"/>
+
+    <target name="install"
+            depends="fetch-dependencies, prepare, gettext.compile, db-deploy"
+            description="Installiert die Anwendung in die aktuelle Umgebung"/>
+
+    <target name="fetch-dependencies"
+            depends="composer-install"
+            description="Installiert abhängige Packet"/>
+
+    <!-- workaround for phing bug https://github.com/phingofficial/phing/pull/257 -->
+    <target name="analyse-php" description="execute static php analysis">
+        <phingcall target="phpcodesniffer"/>
+        <phingcall target="apidoc"/>
+    </target>
+
+    <!-- This would try to fetch Tags from SVN, we've git -->
+    <target name="list-tags"/>
+</project>
