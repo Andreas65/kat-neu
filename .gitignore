@@ -1,0 +1,23 @@
+# See https://confluence.unister.lan/x/tJ1K
+
+# auto-generated configuration
+config/autoload/*.local.php
+config/autoload/local.php
+config/application.config.php
+
+# composer ignore
+composer.phar
+.vagrant
+/vendor/
+/build/vendor/
+
+# Test related ingore
+.phpunit-cas.db
+
+# everything else
+data/DoctrineModule
+data/DoctrineORMModule
+/build/_build/
+.sass-cache/
+/build/npm-debug.log
+/nbproject/private/
