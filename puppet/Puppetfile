@@ -1,0 +1,11 @@
+forge "http://forge.puppetlabs.com"
+
+# puppet forge
+mod 'tPl0ch/composer', "1.3.0"
+mod 'puppetlabs/mysql', "2.2.3"
+mod 'willdurand/nodejs', '1.6.2'
+
+# puppet unister
+mod 'unister-puppet/developer', :git => 'https://stash.unister.lan/scm/qps/puppet-module-developer.git', :ref => '0.6.2'
+mod 'unister-puppet/sass', :git => 'https://stash.unister.lan/scm/qps/puppet-module-sass.git', :ref => '0.7.2'
+mod 'cloneportal/phantomjs', :git => 'https://stash.unister.lan/scm/wtp/phantomjs.git', :ref => '0.1.0'
