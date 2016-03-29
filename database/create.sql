@@ -1,3 +1,18 @@
 DROP DATABASE IF EXISTS `skeleton`;
 CREATE DATABASE IF NOT EXISTS `skeleton` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `skeleton`;
+
+CREATE TABLE `AlbumArtist` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `genre` varchar(50) DEFAULT NULL,
+  `albenAnzahl` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `AlbumSongs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `Artist_id` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
