@@ -1,0 +1,25 @@
+<div>
+    <table border="1">
+        <colgroup width="200" span="3"></colgroup>
+        <tr><th colspan="3" align=center><?php echo $titel; ?></th></tr>
+        <tr>
+        <?php
+            foreach ($spaltenkoepfe as $spaltenkopf) {
+                echo '<th>' . $spaltenkopf . '</th>';
+            }
+        ?>
+        </tr>
+        <?php
+            foreach ($albums as $album) {
+                echo '<tr><td>' . $this->escapeHtml($album->getName()) . 
+                        '</td><td>' . $this->escapeHtml($album->getGenre()) .
+                        '</td><td align=right>' . $this->escapeHtml($album->getAlbenAnzahl()) .
+                    '</td></tr>';
+            }
+        ?>
+    </table>
+    
+<?php 
+    echo $this->render('album/album/menu/menu.phtml');
+?>
+</div>

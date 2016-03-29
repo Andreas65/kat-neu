@@ -1,0 +1,22 @@
+    <table border="1">
+        <colgroup width="200" span="3"></colgroup>
+        <tr><th colspan="3" align=center><?php echo $titel; ?></th><th colspan="2" rowspan="2">Aufgaben</th></tr>
+        <tr>
+        <?php
+            foreach ($spaltenkoepfe as $spaltenkopf) {
+                echo '<th>' . $spaltenkopf . '</th>';
+            }
+        ?>
+        </tr>
+        <?php
+            foreach ($artisten as $artist) {
+                echo '<tr><td>' . $this->escapeHtml($artist->getName()) . 
+                        '</td><td>' . $this->escapeHtml($artist->getGenre()) .
+                        '</td><td align=right>' . $this->escapeHtml($artist->getAlbenAnzahl()) .
+                    '</td>'
+                        . '<td><a href="/artist/edit/' . $artist->getId() . '"> editieren </a></td>'
+                        . '<td><a href="/artist/delete/' . $artist->getId() . '"> löschen </a></td>'
+                        . '</tr>';
+            }
+        ?>
+    </table>

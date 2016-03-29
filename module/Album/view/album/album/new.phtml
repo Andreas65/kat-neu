@@ -1,0 +1,27 @@
+<div>
+    Aufruf new.phtml
+    <a href="/album" >Verweistext</a>
+    
+    <form action="/album/new" id="form_2">
+        <label id="h2" form="form_2">Namenseingabe</label>
+        <label for="vorname">Vorname</label> 
+        <input type="text" id="vorname" maxlength="30">
+ 
+        <label for="zuname">Zuname</label>  
+        <input type="text" id="zuname" maxlength="40">
+
+        <button type="reset">Eingaben zurücksetzen</button>
+        <button type="submit">Eingaben absenden</button>
+    </form>    
+    
+<form>
+    Eingabe <input type="text" name="text">
+    <button><img src="button.png"></button>
+</form>    
+    
+<?php 
+    echo $this->render('album/album/menu/menu.phtml');
+?>
+    
+    
+</div>

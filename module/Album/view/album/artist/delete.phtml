@@ -1,0 +1,36 @@
+<?php
+$titel = 'Artist löschen';
+$this->headTitle($titel);
+?>
+
+<h1><?php echo $this->escapeHtml($titel); ?></h1>
+
+<p> Möchtest du den Artisten wirklich löschen? <br /><br />
+    <?php echo 'Name: ' . $this->escapeHtml($artist->getName()); ?>
+    <?php echo '<br /> Genre: ' . $this->escapeHtml($artist->getGenre()); ?>
+    <?php echo '<br /> Albenanzahl: ' . $this->escapeHtml($artist->getAlbenAnzahl()); ?>
+    
+</p>
+
+<?php 
+$url = $this->url('artist', array(
+     'action' => 'delete',
+     'id'     => $this->id,
+ ));
+
+?>
+
+<form action="<?php echo $url; ?>" method="post">
+ <div>
+     <input type="hidden" name="id" value="<?php echo (int) $artist->getId(); ?>" />
+     <input type="submit" name="del" value="Yes" />
+     <input type="submit" name="del" value="No" />
+ </div>
+ </form>
+
+
+<?php
+    echo $this->render('album/artist/menu/menu.phtml');
+?>
+
+</div>
