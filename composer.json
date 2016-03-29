@@ -1,0 +1,52 @@
+{
+    "name": "kat-neu",
+    "autoload": {
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TravelPackages\\Skeleton\\Behat\\": "tests/features/bootstrap",
+            "TravelPackages\\Skeleton\\Behat\\Mink\\": "tests/acceptance/bootstrap"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://stash.unister.lan/projects/TRPA/repos/packages/browse/packages.json?raw"
+        },
+        {
+            "type": "composer",
+            "url": "http://packages.unister.lan/"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "zendframework/zendframework": "~2.4",
+        "unister-core_zf2/log": "~1.4",
+        "unister-core_zf2/doctrine": "~0.4",
+        "unister-core_zf2/conditional-partial": "~2.0",
+        "unister-core_zf2/modularization": "~0.3",
+        "unister-core_zf2/session": "~1.2",
+        "unister-core_zf2/advertisement": "@dev",
+        "widmogrod/zf2-assetic-module": "@dev",
+        "components/qunit": "~1.11",
+        "components/jquery": "~1.10",
+        "components/jqueryui": "~1.10",
+        "unister-travelpackages/frontendconfig": "^0.1.1"
+    },
+    "require-dev": {
+        "zendframework/zend-developer-tools": "dev-master",
+        "phpunit/phpunit": "~4.6",
+        "phpunit/php-invoker": "~1.1",
+        "lstrojny/phpunit-clever-and-smart": "0.5.*",
+        "mikey179/vfsStream": "~1.2",
+        "behat/behat": "~3.0",
+        "behat/mink": "~1.6",
+        "behat/mink-extension": "~2.0",
+        "behat/mink-selenium2-driver": "~1.2",
+        "behat/mink-browserkit-driver": "~1.2",
+        "behat/mink-goutte-driver": "~1.1"
+    },
+    "config": {
+        "component-dir": "data/components"
+    }
+}
