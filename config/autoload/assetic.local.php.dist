@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * Skeleton
+ *
+ * Configuration file for zf2-assetic-module
+ *
+ * @author    Unister GmbH <entwicklung@unister.de>
+ * @author    Fabian Grutschus <fabian.grutschus@unister.de>
+ * @copyright Copyright (c) 2014 Unister GmbH
+ */
+
+return [
+    'assetic_configuration' => [
+        'baseUrl'        => '/assets',
+        'webPath'        => 'public/assets',
+        'cachePath'      => 'data/cache/assets',
+        'cacheEnabled'   => ${assetic.cacheEnabled},
+        'debug'          => ${assetic.debug},
+        'buildOnRequest' => ${assetic.buildOnRequest},
+        // TODO use route specific definition if portal menu entries available
+        'default' => [
+            /*
+             * The assets listed here are included on _every_ page (by the headLink-helper)
+             * Add new assets depending on portal kit configuration
+             *
+             * Dont add raw definitions e.g. images or fonts
+             */
+            'assets' => [
+                '@jquery_js',
+                '@jqueryui_js',
+                '@jqueryui_css',
+                '@skeleton_css',
+                '@skeleton_js',
+            ],
+        ],
+         'modules'        => [
+            'skeleton'        => [
+                'root_path'   => 'data/assets',
+                'collections' => [
+                    'skeleton_css' => [
+                        'assets'  => [
+                            'css/*.css',
+                        ],
+                        'filters' => [
+                            'CssRewriteFilter' => [
+                                'name' => 'Assetic\Filter\CssRewriteFilter',
+                            ],
+                        ],
+                    ],
+                    'skeleton_js'  => [
+                        'assets' => [
+                            'js/*.js',
+                        ],
+                    ],
+                ]
+            ],
+            'application' => [
+                'root_path'   => 'data/components',
+                'collections' => [
+                    'jquery_js'    => [
+                        'assets' => [
+                            'jquery/jquery.js',
+                        ],
+                    ],
+                    'jqueryui_js'  => [
+                        'assets' => [
+                            'jquery-ui/ui/*.js',
+                        ],
+                    ],
+                    'jqueryui_css' => [
+                        'assets'  => [
+                            'jquery-ui/themes/ui-lightness/jquery-ui.css',
+                        ],
+                        'filters' => [
+                            'CssRewriteFilter' => [
+                                'name' => 'Assetic\Filter\CssRewriteFilter',
+                            ],
+                        ],
+                    ],
+                    'jqueryui_img' => [
+                        'assets'  => [
+                            'jquery-ui/themes/ui-lightness/images/*',
+                        ],
+                        'options' => [
+                            'move_raw' => true,
+                        ]
+                    ],
+                ],
+            ],
+        ],
+    ],
+];

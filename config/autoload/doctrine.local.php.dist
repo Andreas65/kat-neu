@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Skeleton
+ *
+ * Configuration file for doctrine. Note that for each database an own configuration like orm_default must be created.
+ * But there is a trick, if the databases are on the same server. Then you can specify the full table with database.
+ *
+ * @copyright Copyright (c) 2014 Unister GmbH
+ * @author    Unister GmbH <entwicklung@unister.de>
+ * @author    Fabian Grutschus <fabian.grutschus@unister.de>
+ */
+
+return [
+    'doctrine' => [
+        'connection' => [
+            'orm_default' => [
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => [
+                    'host' => '${db.server.main.host}',
+                    'port' => '${db.server.main.port}',
+                    'user' => '${db.server.main.username}',
+                    'password' => '${db.server.main.password}',
+                    'dbname' => '${db.server.main.name}',
+                    // if db server connection option fpr utf-8 not set use
+                    'driverOptions' => [\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'],
+                ]
+            ]
+        ]
+    ]
+];
