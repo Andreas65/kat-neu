@@ -1,6 +1,9 @@
     <table border="1">
         <colgroup width="200" span="1"></colgroup>
-        <tr><th colspan="1" align=center><?php echo $titel; ?></th><th colspan="2" rowspan="2">Aufgaben</th></tr>
+        <tr><th colspan="1" align=center><?php echo $titel; ?></th>
+            <th>Songs</th>
+            <th colspan="2" rowspan="2">Aufgaben</th>
+        </tr>
         <tr>
         <?php
             foreach ($spaltenkoepfe as $spaltenkopf) {
@@ -11,17 +14,17 @@
         <?php
             foreach ($albums as $album) {
                 echo '<tr><td>' . $this->escapeHtml($album->getName()) . 
-                    '</td>';
+                    '</td><td></td>'
+                     . '<td><a href="/album/edit/' . $album->getId() . '"> editieren </a></td>'
+                     . '<td><a href="/album/delete/' . $album->getId() . '"> löschen </a></td>'
+                     . '</tr>';
             
                 $songs = $album->getSongs();
 
                 foreach ($songs as $song) {
-                    echo  '<td >' . $song->getName() . '</td>';
+                    echo  '</tr><tr><td></td><td>' . $song->getName() . '</td><td colspan="2"></td>';
                 }
 
-                echo '<td><a href="/album/edit/' . $album->getId() . '"> editieren </a></td>'
-                     . '<td><a href="/album/delete/' . $album->getId() . '"> löschen </a></td>'
-                     . '</tr>';
             }
         ?>
     </table>
