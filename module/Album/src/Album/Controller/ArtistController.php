@@ -152,7 +152,4 @@ class ArtistController extends AbstractActionController
             'form' => $form,
         );
     }
-    
-    
-    
 }

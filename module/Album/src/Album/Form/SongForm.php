@@ -16,13 +16,14 @@ namespace Album\Form;
 use Zend\Form\Element;
 use Zend\Form\Form;
 
-class ArtistForm extends Form
+class SongForm extends Form
 {
 
     public function __construct($name = null)
     {
-        parent::__construct('artist');
+        parent::__construct('song');
 
+////        $element  new \Zend\Form\Element\MultiCheckbox()
 //        
 //    $select = new Element\Select('language');
 //     $select->setLabel('In welcher Sprache wird gesungen?');
@@ -52,19 +53,10 @@ class ArtistForm extends Form
         );
         $this->add(
             array(
-                'name' => 'genre',
+                'name' => 'artist_id',
                 'type' => 'Text',
                 'options' => array(
-                    'label' => 'Genre',
-                ),
-            )
-        );
-        $this->add(
-            array(
-                'name' => 'albenAnzahl',
-                'type' => 'Text',
-                'options' => array(
-                    'label' => 'Anzahl der Alben',
+                    'label' => 'Artist',
                 ),
             )
         );

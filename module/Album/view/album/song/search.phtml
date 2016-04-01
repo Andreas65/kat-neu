@@ -11,16 +11,15 @@
         ?>
         </tr>
         <?php
-            foreach ($artisten as $artist) {
-                echo '<tr><td>' . $this->escapeHtml($artist->getName()) . 
-                        '</td><td>' . $this->escapeHtml($artist->getGenre()) .
-                        '</td><td align=right>' . $this->escapeHtml($artist->getAlbenAnzahl()) .
+            foreach ($artisten as $song) {
+                echo '<tr><td>' . $this->escapeHtml($song->getName()) . 
+                        '</td><td align=right>' . $this->escapeHtml($song->getArtist_id()) .
                     '</td></tr>';
             }
         ?>
     </table>
     
 <?php 
-    echo $this->render('album/artist/menu/menu.phtml');
+    echo $this->render('album/song/menu/menu.phtml');
 ?>
 </div>

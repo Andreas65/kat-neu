@@ -4,16 +4,13 @@
 ?>
  <h3><?php echo $this->escapeHtml($titel); ?></h3>
 <?php
-    $form->setAttribute('action', $this->url('artist', array('action' => 'edit')));
+    $form->setAttribute('action', $this->url('song', array('action' => 'edit')));
     $form->prepare();
 
     echo $this->form()->openTag($form);
     echo $this->formHidden($form->get('id'));
     echo $this->formRow($form->get('name'));
-    echo $this->formRow($form->get('genre'));
-    echo $this->formRow($form->get('albenAnzahl'));
-//    echo $this->formRow($form->get('language'));
     echo $this->formSubmit($form->get('submit'));
     echo $this->form()->closeTag();
  
-    echo $this->render('album/artist/menu/menu.phtml');
+    echo $this->render('album/song/menu/menu.phtml');

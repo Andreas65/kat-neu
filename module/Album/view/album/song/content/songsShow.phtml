@@ -1,0 +1,20 @@
+    <table border="1">
+        <colgroup width="200" span="2"></colgroup>
+        <tr><th colspan="2" align=center><?php echo $titel; ?></th><th colspan="2" rowspan="2">Aufgaben</th></tr>
+        <tr>
+        <?php
+            foreach ($spaltenkoepfe as $spaltenkopf) {
+                echo '<th>' . $spaltenkopf . '</th>';
+            }
+        ?>
+        </tr>
+        <?php
+            foreach ($songs as $song) {
+                echo '<tr><td>' . $this->escapeHtml($song->getName()) . 
+                        '</td>'
+                        . '<td><a href="/song/edit/' . $song->getId() . '"> editieren </a></td>'
+                        . '<td><a href="/song/delete/' . $song->getId() . '"> löschen </a></td>'
+                        . '</tr>';
+            }
+        ?>
+    </table>

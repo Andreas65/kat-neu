@@ -11,21 +11,23 @@ namespace Album\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Album\Service\AlbumService;
-use Album\Form\AlbumForm;
-use Album\Entity\Album;
+use Album\Service\SongService;
+use Album\Form\SongForm;
+use Album\Entity\Song;
+use Traversable;
+use Zend\Stdlib\ArrayUtils;
 
-class AlbumController extends AbstractActionController
+class SongController extends AbstractActionController
 {
 
     public function indexAction()
     {
         return new ViewModel(
             array(
-                'albums' => $this->getServiceLocator()->get('Album\Service\AlbumService')->fetchAll(),
-                'titel' => 'Alben',
+                'songs' => $this->getServiceLocator()->get('Album\Service\SongService')->fetchAll(),
+                'titel' => 'Songs',
                 'spaltenkoepfe' => array(
-                    'Name'
+                    'Name', 'Artist'
                 )
             )
         );
@@ -33,27 +35,23 @@ class AlbumController extends AbstractActionController
 
     public function newAction()
     {
-        
-        $songs = $this->getServiceLocator()->get('Album\Service\SongService')->fetchAll();
-        $form = new AlbumForm($songs);
+        $form = new SongForm();
 
         $form->get('submit')->setValue('Hinzufügen');
         
         
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $album = new Album();
-            $form->setInputFilter($this->getServiceLocator()->get('Album\Service\AlbumService')->getInputFilter());
+            $song = new Song();
+            $form->setInputFilter($this->getServiceLocator()->get('Album\Service\SongService')->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $songsSelect = $this->getServiceLocator()->get('Album\Service\SongService')->searchByIds($form->getData()['songauswahl']);
-                
-                $album->exchangeArray($form->getData(), $songsSelect);
-                $this->getServiceLocator()->get('Album\Service\AlbumService')->save($album);
+                $song->exchangeArray($form->getData());
+                $this->getServiceLocator()->get('Album\Service\SongService')->save($song);
 
-                // Redirect to list of album
-                return $this->redirect()->toRoute('album');
+                // Redirect to list of artist
+                return $this->redirect()->toRoute('song');
 
             }
         }
@@ -65,10 +63,10 @@ class AlbumController extends AbstractActionController
     {
         return new ViewModel(
             array(
-                'albums' => $this->getServiceLocator()->get('Album\Service\AlbumService')->search(),
-                'titel' => 'Alben',
+                'songs' => $this->getServiceLocator()->get('Album\Service\SongService')->search(),
+                'titel' => 'Songs',
                 'spaltenkoepfe' => array(
-                    'Name'
+                    'Name', 'Artist'
                 )
             )
         );
@@ -79,7 +77,7 @@ class AlbumController extends AbstractActionController
 
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('album');
+            return $this->redirect()->toRoute('song');
         }
         
         $request = $this->getRequest();
@@ -88,14 +86,14 @@ class AlbumController extends AbstractActionController
             
             if ($del == 'Yes') {
                 $id = (int) $request->getPost('id');
-                $this->getServiceLocator()->get('Album/Service/AlbumService')->deleteById($id);
+                $this->getServiceLocator()->get('Album/Service/SongService')->deleteById($id);
             }
-            return $this->redirect()->toRoute('album');
+            return $this->redirect()->toRoute('song');
         }
         
         return array(
             'id'    => $id,
-            'album' => $this->getServiceLocator()->get('Album/Service/AlbumService')->searchById($id),
+            'song' => $this->getServiceLocator()->get('Album/Service/SongService')->searchById($id),
         );
     }
     
@@ -113,31 +111,35 @@ class AlbumController extends AbstractActionController
         }
         
         if (!$id) {
-            return $this->redirect()->toRoute('album', array('action' => 'new'));
+            return $this->redirect()->toRoute('song', array('action' => 'new'));
         }
         
-        $album = $this->getServiceLocator()->get('Album\Service\AlbumService')->searchById($id);
-        
-        if (!$album) {
-            return $this->redirect()->toRoute('album', array('action' => 'index'));
+        $song = $this->getServiceLocator()->get('Album\Service\SongService')->searchById($id);
+
+        if (!$song) {
+            return $this->redirect()->toRoute('song', array('action' => 'index'));
         }
         
-        $form = new AlbumForm();
-        $form->bind($album);
+        $form = new SongForm();
+        $form->bind($song);
         $form->get('submit')->setAttribute('value', 'speichern');
         
         
         if ($request->isPost()) {
-            $form->setInputFilter($this->getServiceLocator()->get('Album\Service\AlbumService')->getInputFilter());
+            $form->setInputFilter($this->getServiceLocator()->get('Album\Service\SongService')->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $this->getServiceLocator()->get('Album\Service\AlbumService')->save($album);
-                return $this->redirect()->toRoute('album');
+                if ($data instanceof Traversable) {
+                    $data = ArrayUtils::iteratorToArray($data);
+                    $song->exchangeArray($data);
+                }
+                $this->getServiceLocator()->get('Album\Service\SongService')->save($song);
+                return $this->redirect()->toRoute('song');
             }
         }
         
         return array(
-            'titel' => 'Album editieren',
+            'titel' => 'Song editieren',
             'id' => $id,
             'form' => $form,
         );

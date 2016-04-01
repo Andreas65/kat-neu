@@ -2,20 +2,25 @@
  
 namespace Album\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
+
+
 /**
  * Album
  *
  * @ORM\Entity
- * @ORM\Table(name="artist")
+ * @ORM\Table(name="song")
  * @property string $name
  * @property string $genre
  * @property int $albenAnzahl
  * 
  */
-use Doctrine\ORM\Mapping as ORM;
 
 
-class Artist
+class Song implements InputFilterAwareInterface 
 {
     /**
      * @ORM\Id
@@ -30,16 +35,18 @@ class Artist
     protected $name;
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToMany(targetEntity="Artist")
+     * @ORM\JoinTable(name="song_x_artist",
+     *      joinColumns={@ORM\JoinColumn(name="song_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="artist_id", referencedColumnName="id")}
+     *      )
      */
-    protected $genre;
+    private $artist;
+
+    public function __construct() {
+        $this->artist = new \Doctrine\Common\Collections\ArrayCollection();
+    }    
     
-    /**
-     * @ORM\Column(type="integer");
-     */
-    protected $albenAnzahl;
-    
-   
     function getId()
     {
         return $this->id;
@@ -48,16 +55,6 @@ class Artist
     function getName()
     {
         return $this->name;
-    }
-
-    function getGenre()
-    {
-        return $this->genre;
-    }
-
-    function getAlbenAnzahl()
-    {
-        return $this->albenAnzahl;
     }
 
     function setId($id)
@@ -70,26 +67,25 @@ class Artist
         $this->name = $name;
     }
 
-    function setGenre($genre)
-    {
-        $this->genre = $genre;
-    }
-
-    function setAlbenAnzahl($albenAnzahl)
-    {
-        $this->albenAnzahl = $albenAnzahl;
-    }
-    
     public function exchangeArray(array $data)
     {
         $this->id           = (!empty($data['id'])) ? $data['id'] : null;
         $this->name         = (!empty($data['name'])) ? $data['name'] : null;
-        $this->genre        = (!empty($data['genre'])) ? $data['genre'] : null;
-        $this->albenAnzahl  = (!empty($data['albenAnzahl'])) ? $data['albenAnzahl'] : null;
     }
-    
+
     public function getArrayCopy()
     {
         return get_object_vars($this);
+    }
+
+    public function getInputFilter()
+    {
+        
+    }
+
+
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        
     }
 }

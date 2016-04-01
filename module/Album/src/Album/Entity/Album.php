@@ -3,16 +3,12 @@
 namespace Album\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
-
 
 /**
  * Album
  *
  * @ORM\Entity
- * @ORM\Table(name="AlbumArtist")
+ * @ORM\Table(name="album")
  * @property string $name
  * @property string $genre
  * @property int $albenAnzahl
@@ -20,7 +16,7 @@ use Zend\InputFilter\InputFilterInterface;
  */
 
 
-class Album implements InputFilterAwareInterface 
+class Album
 {
     /**
      * @ORM\Id
@@ -33,16 +29,19 @@ class Album implements InputFilterAwareInterface
      * @ORM\Column(type="string")
      */
     protected $name;
-    
+
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToMany(targetEntity="Song")
+     * @ORM\JoinTable(name="album_x_song",
+     *      joinColumns={@ORM\JoinColumn(name="album_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="song_id", referencedColumnName="id")}
+     *      )
      */
-    protected $genre;
-    
-    /**
-     * @ORM\Column(type="integer");
-     */
-    protected $albenAnzahl;
+    private $songs;
+
+    public function __construct() {
+        $this->songs = new \Doctrine\Common\Collections\ArrayCollection();
+    }    
     
     function getId()
     {
@@ -52,16 +51,6 @@ class Album implements InputFilterAwareInterface
     function getName()
     {
         return $this->name;
-    }
-
-    function getGenre()
-    {
-        return $this->genre;
-    }
-
-    function getAlbenAnzahl()
-    {
-        return $this->albenAnzahl;
     }
 
     function setId($id)
@@ -74,14 +63,21 @@ class Album implements InputFilterAwareInterface
         $this->name = $name;
     }
 
-    function setGenre($genre)
+    public function getSongs()
     {
-        $this->genre = $genre;
+        return $this->songs;
     }
-
-    function setAlbenAnzahl($albenAnzahl)
+    
+    public function setSongs($songs)
     {
-        $this->albenAnzahl = $albenAnzahl;
+        $this->songs = $songs;
+    }
+    
+    public function exchangeArray(array $data, array $songs = array())
+    {
+        $this->id           = (!empty($data['id'])) ? $data['id'] : null;
+        $this->name         = (!empty($data['name'])) ? $data['name'] : null;
+        $this->setSongs($songs);
     }
 
     public function getInputFilter()

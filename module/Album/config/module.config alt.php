@@ -44,6 +44,7 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Album\Service\AlbumService' => 'Album\Service\AlbumServiceFactory',
+            'Album\Service\SongService' => 'Album\Service\SongServiceFactory',
             'Album\Service\ArtistService' => 'Album\Service\ArtistServiceFactory'
         ),
     ),
@@ -51,6 +52,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Album\Controller\Album' => 'Album\Controller\AlbumController',
+            'Album\Controller\Song' => 'Album\Controller\SongController',
             'Album\Controller\Artist' => 'Album\Controller\ArtistController'
         ),
     ),

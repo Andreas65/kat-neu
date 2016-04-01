@@ -67,31 +67,23 @@ class ArtistService implements InputFilterAwareInterface
     
     public function save(Artist $artist)
     {
-//        $artist->setId(4);
-//        $data = array(
-//            'name' => $artist->getName(),
-//            'genre'  => $artist->getGenre(),
-//            'albenAnzahl'  => $artist->getAlbenAnzahl(),
-//        );
-        
         $em = $this->getEntityManager();
         $id = (int) $artist->getId();
         
         if ($id == 0) {
             
             try {
-//            $artist->exchangeArray($data);
 
-            $em->persist($artist);
-            $em->flush();
+                $em->persist($artist);
+                $em->flush();
             
             } catch(\Exception $ex) {
-                    \Zend\Debug\Debug::dump($ex->getMessage());
-                    die(__CLASS__);
-                    }
+                \Zend\Debug\Debug::dump($ex->getMessage());
+                die(__CLASS__);
+            }
             
         } else {
-
+            // updata
             if ($this->searchById($id)) {
                 
                 try {
@@ -112,8 +104,6 @@ class ArtistService implements InputFilterAwareInterface
                     \Zend\Debug\Debug::dump($ex->getMessage());
                     die(__CLASS__);
                 }
-                
-                
             } else {
                 throw new \Exception('Artist existiert nicht');
             }
@@ -199,7 +189,4 @@ class ArtistService implements InputFilterAwareInterface
 
         return $this->inputFilter;
     }    
-    
-    
-    
 }

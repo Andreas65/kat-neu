@@ -17,11 +17,9 @@ namespace Album\Service;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\InputFilter;
-use Album\Entity\Album;
+use Album\Entity\Song;
 
-
-
-class AlbumService implements InputFilterAwareInterface
+class SongService implements InputFilterAwareInterface
 {
     protected $repository;
     protected $entityManager;
@@ -67,16 +65,26 @@ class AlbumService implements InputFilterAwareInterface
         return $list;
     }
     
-    public function save($album)
+    public function searchByIds($ids)
+    {
+        $songs = array();
+        foreach ($ids as $id) {
+            
+            $songs[] = $this->getRepository()->find($id);
+        }
+        return $songs;
+    }
+    
+    public function save($song)
     {
         $em = $this->getEntityManager();
-        $id = (int) $album->getId();
+        $id = (int) $song->getId();
         
         if ($id == 0) {
             
             try {
 
-                $em->persist($album);
+                $em->persist($song);
                 $em->flush();
             
             } catch(\Exception $ex) {
@@ -91,10 +99,12 @@ class AlbumService implements InputFilterAwareInterface
                 try {
                 
                 $qb = $em->createQueryBuilder();
-                $qb ->update('Album\Entity\Artist','a')
+                $qb ->update('Album\Entity\Song','a')
                     ->where('a.id=' .  $id )                        
                     ->set('a.name','?0')
-                    ->setParameter(0,$album->getName())
+                    ->set('a.artist_id','?1')
+                    ->setParameter(0,$song->getName())
+                    ->setParameter(1,$song->getArtist_id())
                     ->getQuery()
                     ->execute();
 
@@ -103,38 +113,19 @@ class AlbumService implements InputFilterAwareInterface
                     die(__CLASS__);
                 }
             } else {
-                throw new \Exception('Artist existiert nicht');
+                throw new \Exception('Song existiert nicht');
             }
         }
-    }
+    }    
     
     public function deleteById($id)
     {
-        $album = $this->getRepository()->find($id);
-        if ($album instanceof \Album\Entity\Album) {
+        $song = $this->getRepository()->find($id);
+        if ($song instanceof \Album\Entity\Song) {
             $em = $this->getEntityManager();
-            $em->remove($album);
+            $em->remove($song);
             $em->flush();
         }
-    }
-    
-    public function getAllAlbums()
-    {
-        //return true;
-        $query = $this->entityManager->createQueryBuilder()
-            ->select(array('i','also'))
-            ->from('Album\Entity\Album','i')
-            ->leftJoin('Album\Entity\AlbumSongs', 'also', 'WITH', 'i.id = also.album_id')
-//            ->where('i.cancelled = 0')
-//            ->andWhere('e.number IS NULL')
-            ->getQuery();
-
-        return $query->getResult();
-    }    
-    
-    public function getAlbumSongArtist()
-    {
-        return 'getAlbumSongArtist';
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter) {
@@ -172,9 +163,20 @@ class AlbumService implements InputFilterAwareInterface
                 ),
             ));
 
+            $inputFilter->add(array(
+                'name' => 'artist_id',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            ));
+
             $this->inputFilter = $inputFilter;
         }
 
         return $this->inputFilter;
     }    
+    
+    
+    
 }

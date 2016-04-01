@@ -1,19 +1,17 @@
 <?php
 
-$title = 'Ein neues Album anlegen';
+$title = 'Einen neuen Song anlegen';
 $this->headTitle($title);
 ?>
 <h3><?php echo $this->escapeHtml($title); ?></h3>
 <?php
-$form->setAttribute('action', $this->url('album', array('action' => 'new')));
+$form->setAttribute('action', $this->url('song', array('action' => 'new')));
 $form->prepare();
 
 echo $this->form()->openTag($form);
 echo $this->formHidden($form->get('id'));
 echo $this->formRow($form->get('name'));
-echo $this->formMultiCheckbox($form->get('songauswahl'));
-
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();
  
-echo $this->render('album/album/menu/menu.phtml');
+echo $this->render('album/song/menu/menu.phtml');
